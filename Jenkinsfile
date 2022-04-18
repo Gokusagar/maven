@@ -1,13 +1,12 @@
+@Library ('math')_
 node('built-in') 
 {
-    stage('continuosdownload') 
+    stage('Continuousdownload') 
     {
-    git 'https://github.com/intelliqittrainings/maven.git'
+      cicd.newgit("https://github.com/intelliqittrainings/maven.git")
     }
-    stage('continuosbuild') 
+    stage('Continuousbuild') 
     {
-    sh 'mvn package'
+      cicd.newbuild()
     }
-
- 
 }
