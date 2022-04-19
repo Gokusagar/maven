@@ -1,12 +1,29 @@
-@Library ('math')_
-node('built-in') 
+@Library ('libraries')_
+pipeline
 {
-    stage('Continuousdownload') 
+    agent any
+    stages
     {
-      cicd.newgit("https://github.com/intelliqittrainings/maven.git")
+        stage (continuiusdownload)
+        {
+            steps
+            {
+                script
+                {
+                     cicd.mygit("https://github.com/intelliqittrainings/maven.git")
+                }
+            }
+        }
+         stage (continuiusbuild)
+        {
+            steps
+            {
+                script
+                {
+                      cicd.mymvn()
+                }
+            }
+        }
     }
-    stage('Continuousbuild') 
-    {
-      cicd.newbuild()
-    }
+    
 }
