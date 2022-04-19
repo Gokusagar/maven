@@ -1,26 +1,43 @@
-@Library ('math')_
-node('built-in') 
+pipeline
 {
-    stage('Continuousdownload') 
+    agent any
+    stages
     {
-      cicd.newgit("https://github.com/intelliqittrainings/maven.git")
-    }
-    stage('Continuousbuild') 
-    {
-      cicd.newbuild()
-    }
-    stage('Continuousdeploy') 
-    {
-      cicd.newdeploy("scriptedpipeline2","172.31.10.76","test456")
-    }
-     stage('Continuoustest') 
-    {
-      cicd.newgit("https://github.com/intelliqittrainings/FunctionalTesting.git")
-      cicd.newtest()
-    }
-    stage('Continuousdelivery') 
-    {
-      cicd.newdeploy("scriptedpipeline2","172.31.3.124","client456")
-      
+        stage(continuousdownload)
+        {
+            steps
+            {
+                git 'https://github.com/intelliqittrainings/maven.git'
+            }
+        }
+        stage(continuousbuild)
+        {
+            steps
+            {
+                sh 'mvn package'
+            }
+        }
+        stage(continuousdeploy)
+        {
+            steps
+            {
+                sh 'scp /home/ubuntu/.jenkins/workspace/declarativepipeline/webapp/target/webapp.war ubuntu@172.31.20.33:/var/lib/tomcat9/webapps/test12.war'
+            }
+        }
+        stage(continuoustesting)
+        {
+            steps
+            {
+                git 'https://github.com/intelliqittrainings/FunctionalTesting.git'
+                sh 'java -jar testing.jar'
+            }
+        }
+        stage(continuousdelivery)
+        {
+            steps
+            {
+                sh 'scp /home/ubuntu/.jenkins/workspace/declarativepipeline/webapp/target/webapp.war ubuntu@172.31.25.112:/var/lib/tomcat9/webapps/client12.war'
+            }
+        }
     }
 }
