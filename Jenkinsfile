@@ -1,26 +1,61 @@
-@Library ('math')_
-node('built-in') 
+@Library ('libraries')_
+pipeline
 {
-    stage('Continuousdownload') 
+    agent any
+    stages
     {
-      cicd.newgit("https://github.com/intelliqittrainings/maven.git")
+        stage (continuiusdownload)
+        {
+            steps
+            {
+                script
+                {
+                     cicd.mygit("https://github.com/intelliqittrainings/maven.git")
+                }
+            }
+        }
+         stage (continuiusbuild)
+        {
+            steps
+            {
+                script
+                {
+                      cicd.mymvn()
+                }
+            }
+        }
+        stage (continuiusdeploy)
+        {
+            steps
+            {
+                script
+                {
+                      cicd.mydeploy("libraries","172.31.20.33","test23.war")
+                }
+            }
+        }
+        stage (continuiustesting)
+        {
+            steps
+            {
+                script
+                {
+                      cicd.mygit("https://github.com/intelliqittrainings/FunctionalTesting.git")
+                      cicd.mytest()
+                }
+            }
+        }
+        stage (continuiuousdelivery)
+        {
+            steps
+            {
+                script
+                {
+                      cicd.mydeploy("libraries","172.31.25.112","client23.war")
+                      cicd.mytest()
+                }
+            }
+        }
     }
-    stage('Continuousbuild') 
-    {
-      cicd.newbuild()
-    }
-    stage('Continuousdeploy') 
-    {
-      cicd.newdeploy("scriptedpipeline2","172.31.10.76","test456")
-    }
-     stage('Continuoustest') 
-    {
-      cicd.newgit("https://github.com/intelliqittrainings/FunctionalTesting.git")
-      cicd.newtest()
-    }
-    stage('Continuousdelivery') 
-    {
-      cicd.newdeploy("scriptedpipeline2","172.31.3.124","client456")
-      
-    }
+    
 }
