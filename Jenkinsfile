@@ -40,7 +40,7 @@ pipeline
             {
                 script
                 {
-                      cicd.mygit("https://github.com/intelliqittrainings/FunctionalTesting.git")
+                      cicd.mylab("https://github.com/intelliqittrainings/FunctionalTesting.git")
                       cicd.mytest()
                 }
             }
