@@ -10,7 +10,7 @@ pipeline
             {
                 script
                 {
-                     cicd.mygit("https://github.com/intelliqittrainings/maven.git")
+                     cicd.mylab("https://github.com/intelliqittrainings/maven.git")
                 }
             }
         }
@@ -20,7 +20,7 @@ pipeline
             {
                 script
                 {
-                      cicd.mymvn()
+                      cicd.mybuild()
                 }
             }
         }
