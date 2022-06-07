@@ -1,4 +1,4 @@
-@Library ('libraries')_
+@Library ('Libraries')_
 pipeline
 {
     agent any
