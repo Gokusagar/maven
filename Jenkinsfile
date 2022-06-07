@@ -1,29 +1,59 @@
-@Library ('libraries')_
+@Library('Libraries')_
 pipeline
 {
     agent any
     stages
     {
-        stage (continuiusdownload)
+        stage('continuousdownload')
         {
             steps
             {
                 script
                 {
-                     cicd.mylab("https://github.com/intelliqittrainings/maven.git")
+                    cicd.mygit("https://github.com/intelliqittrainings/maven.git")
                 }
             }
         }
-         stage (continuiusbuild)
+        stage('continuousbuild')
         {
             steps
             {
                 script
                 {
-                      cicd.mybuild()
+                    cicd.mybuild()
+                }
+            }
+        }
+        stage('continousdeploy')
+        {
+            steps
+            {
+                script
+                {
+                    cicd.mydeploy("declarativepipeline2","172.31.1.203","test2.war")
+                }
+            }
+        }
+        stage('continoustesting')
+        {
+            steps
+            {
+                script
+                {
+                    cicd.mygit("https://github.com/intelliqittrainings/FunctionalTesting.git")
+                    cicd.mytest()
+                }
+            }
+        }
+        stage('continousdelivery')
+        {
+            steps
+            {
+                script
+                {
+                    cicd.mydeploy("declarativepipeline2","172.31.1.21","prod.war")
                 }
             }
         }
     }
-    
 }
